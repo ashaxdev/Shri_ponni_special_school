@@ -1,9 +1,9 @@
 // Mobile navigation drawer
 (function () {
-  const toggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  const backdrop = document.getElementById('nav-backdrop');
-  const closeBtn = document.getElementById('nav-close');
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('mainNav');
+  const backdrop = document.getElementById('navBackdrop');
+  const closeBtn = document.getElementById('navClose');
 
   if (!toggle || !nav || !backdrop) return;
 
