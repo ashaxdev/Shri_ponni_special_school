@@ -167,37 +167,5 @@
     </div>
   </footer>
 <script src="script.js" defer></script>
-<script>
-(function () {
-  var toggle   = document.getElementById('navToggle');
-  var nav      = document.getElementById('mainNav');
-  var closeBtn = document.getElementById('navClose');
-  var backdrop = document.getElementById('navBackdrop');
-  if (!toggle || !nav || !backdrop) return;
-
-  function openNav() {
-    nav.classList.add('open');
-    backdrop.classList.add('open');
-    toggle.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeNav() {
-    nav.classList.remove('open');
-    backdrop.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  toggle.addEventListener('click', openNav);
-  if (closeBtn) closeBtn.addEventListener('click', closeNav);
-  backdrop.addEventListener('click', closeNav);
-  nav.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', closeNav);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeNav();
-  });
-})();
-</script>
 </body>
 </html>
