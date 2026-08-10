@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var selectors = [
     '.focus-card', '.value-card', '.vm-card', '.iso-card', '.iso-cert',
-    '.diff-item', '.gallery-tile', '.journey-item', '.pillar-item',
-    '.pill-stat', '.trust-box'
+    '.diff-item', '.gallery-tile', '.journey-item', '.journey-card', '.pillar-item',
+    '.pill-stat', '.trust-box', '.therapy-card'
   ].join(',');
 
   document.querySelectorAll(selectors).forEach(function (el) {
