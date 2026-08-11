@@ -96,3 +96,69 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(el);
   });
 });
+
+// Gallery lightbox — zoom on click, with prev/next navigation
+document.addEventListener('DOMContentLoaded', function () {
+  const tiles = Array.from(document.querySelectorAll('.gallery-tile img'));
+  if (!tiles.length) return;
+
+  // Build overlay markup once
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = `
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous image">&#10094;</button>
+    <div class="lightbox-img-wrap"><img src="" alt=""></div>
+    <button class="lightbox-nav lightbox-next" aria-label="Next image">&#10095;</button>
+    <div class="lightbox-counter"></div>
+  `;
+  document.body.appendChild(overlay);
+
+  const imgEl = overlay.querySelector('.lightbox-img-wrap img');
+  const counterEl = overlay.querySelector('.lightbox-counter');
+  const closeBtn = overlay.querySelector('.lightbox-close');
+  const prevBtn = overlay.querySelector('.lightbox-prev');
+  const nextBtn = overlay.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+
+  function show(index) {
+    currentIndex = (index + tiles.length) % tiles.length;
+    const src = tiles[currentIndex].getAttribute('src');
+    const alt = tiles[currentIndex].getAttribute('alt') || '';
+    imgEl.setAttribute('src', src);
+    imgEl.setAttribute('alt', alt);
+    counterEl.textContent = (currentIndex + 1) + ' / ' + tiles.length;
+  }
+
+  function openLightbox(index) {
+    show(index);
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  tiles.forEach(function (img, i) {
+    img.addEventListener('click', function () { openLightbox(i); });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', function () { show(currentIndex - 1); });
+  nextBtn.addEventListener('click', function () { show(currentIndex + 1); });
+
+  // Click on dark backdrop (not the image itself) closes it
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeLightbox();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') show(currentIndex - 1);
+    if (e.key === 'ArrowRight') show(currentIndex + 1);
+  });
+});
